@@ -1,0 +1,15 @@
+.app-shell {
+  min-height: 100vh;
+}
+
+.navbar-nav {
+  gap: 0.25rem;
+}
+
+.navbar-nav .nav-link {
+  padding-inline: 0.75rem;
+}
+
+main {
+  text-align: left;
+}
