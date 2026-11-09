@@ -21,8 +21,8 @@ function formatCell(value, key) {
   return value
 }
 
-export default function CollectionPage({ title, endpoint, columns }) {
-  const { items, loading, error } = useApiCollection(endpoint)
+export default function CollectionPage({ title, apiUrl, columns }) {
+  const { items, loading, error } = useApiCollection(apiUrl, title)
 
   return (
     <section>

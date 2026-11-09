@@ -1,10 +1,5 @@
 import { useEffect, useState } from 'react'
 
-const codespaceName = import.meta.env.VITE_CODESPACE_NAME
-const apiBaseUrl = codespaceName
-  ? `https://${codespaceName}-8000.app.github.dev`
-  : 'http://localhost:8000'
-
 function getCollection(payload) {
   if (Array.isArray(payload)) {
     return payload
@@ -21,7 +16,7 @@ function getCollection(payload) {
   throw new Error('The API response did not contain a collection of items.')
 }
 
-export default function useApiCollection(endpoint) {
+export default function useApiCollection(apiUrl, collectionName) {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -31,13 +26,13 @@ export default function useApiCollection(endpoint) {
 
     async function loadItems() {
       try {
-        const response = await fetch(`${apiBaseUrl}/api/${endpoint}/`, {
+        const response = await fetch(apiUrl, {
           signal: controller.signal,
         })
 
         if (!response.ok) {
           throw new Error(
-            `Unable to load ${endpoint}: ${response.status} ${response.statusText}`,
+            `Unable to load ${collectionName}: ${response.status} ${response.statusText}`,
           )
         }
 
@@ -57,7 +52,7 @@ export default function useApiCollection(endpoint) {
     loadItems()
 
     return () => controller.abort()
-  }, [endpoint])
+  }, [apiUrl, collectionName])
 
   return { items, loading, error }
 }

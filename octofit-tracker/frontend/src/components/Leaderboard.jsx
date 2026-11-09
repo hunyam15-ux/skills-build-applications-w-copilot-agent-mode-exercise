@@ -1,5 +1,10 @@
 import CollectionPage from './CollectionPage.jsx'
 
+const codespaceName = import.meta.env.VITE_CODESPACE_NAME
+const apiUrl = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev/api/leaderboard/`
+  : 'http://localhost:8000/api/leaderboard/'
+
 const columns = [
   { key: 'rank', label: 'Rank' },
   { key: 'user', label: 'User' },
@@ -9,10 +14,6 @@ const columns = [
 
 export default function Leaderboard() {
   return (
-    <CollectionPage
-      columns={columns}
-      endpoint="leaderboard"
-      title="Leaderboard"
-    />
+    <CollectionPage apiUrl={apiUrl} columns={columns} title="Leaderboard" />
   )
 }
